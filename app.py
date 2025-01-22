@@ -51,7 +51,7 @@ class TaskList(Resource):
     def get(self):
         """Obtener todas las tareas"""
         tasks = load_tasks()
-        return jsonify(tasks)
+        return tasks  
 
     @auth.login_required
     @api.expect(task_model)  # Esperar el modelo de tarea
@@ -70,7 +70,7 @@ class TaskList(Resource):
         }
         tasks.append(new_task)
         save_tasks(tasks)
-        return jsonify(new_task), 201
+        return new_task, 201  
 
 # Actualizar una tarea
 @api.route('/tasks/<int:task_id>')
@@ -86,7 +86,7 @@ class Task(Resource):
                 task['title'] = data.get('title', task['title'])
                 task['completed'] = data.get('completed', task['completed'])
                 save_tasks(tasks)
-                return jsonify(task)
+                return task  
 
         return {'error': 'Tarea no encontrada'}, 404
 
